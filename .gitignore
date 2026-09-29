@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.gradle/
+**/build/
+android/local.properties
+*.jks
+*.keystore
+*.log
+.DS_Store
+test-results/

@@ -1,0 +1,76 @@
+name: Build apps
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run test:desktop
+      - run: npm run build:win -- --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Shuiweixian-Windows
+          path: dist/*.exe
+          if-no-files-found: error
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+      - name: Build installable preview APK and unsigned release
+        working-directory: android
+        run: gradle --no-daemon :app:assembleDebug :app:assembleRelease :app:lintDebug
+      - name: Check bundled game
+        run: unzip -l android/app/build/outputs/apk/debug/app-debug.apk | grep 'assets/index.html'
+      - name: Name downloads
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/debug/app-debug.apk dist/Shuiweixian-Android-Preview.apk
+          cp android/app/build/outputs/apk/release/app-release-unsigned.apk dist/Shuiweixian-Android-Unsigned.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Shuiweixian-Android
+          path: dist/*.apk
+          if-no-files-found: error
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [windows, android]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: Shuiweixian-*
+          path: downloads
+          merge-multiple: true
+      - name: Publish downloadable applications
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          sha256sum downloads/* > downloads/SHA256SUMS.txt
+          gh release create "$RELEASE_TAG" downloads/* --title "水位线 $RELEASE_TAG" --notes "Windows：下载 nsis 安装版或 Portable 免安装版。Android：下载 Preview.apk 安装测试版；Unsigned.apk 仅供开发者自行签名，不能直接安装。游戏与字体全部离线，图标使用提供的原图。Windows 安装包尚未做商业代码签名。"

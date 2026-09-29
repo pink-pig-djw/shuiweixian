@@ -1,0 +1,32 @@
+{
+  "name": "shuiweixian",
+  "version": "1.0.0",
+  "private": true,
+  "description": "水位线 · 离线悬疑文字冒险",
+  "author": "pink-pig-djw",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "icons": "node scripts/icons.cjs",
+    "test": "node --test tests/*.test.cjs",
+    "test:desktop": "electron scripts/desktop-smoke.cjs",
+    "build:win": "electron-builder --win nsis portable --x64",
+    "build:dir": "electron-builder --win --dir --x64",
+    "serve": "node scripts/serve.cjs"
+  },
+  "devDependencies": {
+    "electron": "44.4.5",
+    "electron-builder": "26.15.3",
+    "sharp": "0.34.5"
+  },
+  "build": {
+    "appId": "com.pinkpigdjw.shuiweixian",
+    "productName": "水位线",
+    "directories": {"output": "dist", "buildResources": "assets"},
+    "files": ["desktop/**/*", "web/**/*", "assets/icon.ico", "assets/icon-512.png", "package.json"],
+    "asar": true,
+    "win": {"icon": "assets/icon.ico", "target": ["nsis", "portable"], "artifactName": "Shuiweixian-${version}-${arch}-${target}.${ext}"},
+    "nsis": {"oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "shortcutName": "水位线", "deleteAppDataOnUninstall": false},
+    "portable": {"artifactName": "Shuiweixian-${version}-Windows-Portable.exe"}
+  }
+}
