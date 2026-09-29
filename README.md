@@ -8,7 +8,7 @@
 
 - **Windows 安装版**：`Windows-Setup.exe`，安装时可创建桌面快捷方式。
 - **Windows 免安装版**：`Windows-Portable.exe`，双击运行，无需浏览器或 Node.js。
-- **Android 预览版**：`Shuiweixian-Android-Preview.apk`，支持 Android 8.0 及以上。下载后允许用于下载的应用安装此 APK。
+- **Android 预览版**：`Shuiweixian-Android-Preview.apk`，支持 Android 8.0 及以上，需要已更新的 Android System WebView。下载后允许用于下载的应用安装此 APK。
 - `Android-Unsigned.apk` 是供开发者自行签名的正式构建，**不能直接安装**。
 
 Windows 包尚未使用商业代码签名证书，系统可能提示未知发布者。Android 预览版使用调试签名，适合安装体验；不同 CI 构建的调试密钥可能不同，不保证覆盖升级。长期分发请使用自行保管的固定签名密钥。iOS 不包含在这一版本中。
