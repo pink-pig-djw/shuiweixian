@@ -25,7 +25,7 @@
     "directories": {"output": "dist", "buildResources": "assets"},
     "files": ["desktop/**/*", "web/**/*", "assets/icon.ico", "assets/icon-512.png", "package.json"],
     "asar": true,
-    "win": {"icon": "assets/icon.ico", "target": ["nsis", "portable"], "artifactName": "Shuiweixian-${version}-${arch}-${target}.${ext}"},
+    "win": {"icon": "assets/icon.ico", "target": ["nsis", "portable"], "artifactName": "Shuiweixian-${version}-Windows-Setup.${ext}"},
     "nsis": {"oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "createDesktopShortcut": true, "shortcutName": "水位线", "deleteAppDataOnUninstall": false},
     "portable": {"artifactName": "Shuiweixian-${version}-Windows-Portable.exe"}
   }

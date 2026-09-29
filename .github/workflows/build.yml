@@ -76,4 +76,4 @@ jobs:
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
           sha256sum downloads/* > downloads/SHA256SUMS.txt
-          gh release create "$RELEASE_TAG" downloads/* --title "水位线 $RELEASE_TAG" --notes "Windows：下载 nsis 安装版或 Portable 免安装版。Android：下载 Preview.apk 安装测试版；Unsigned.apk 仅供开发者自行签名，不能直接安装。游戏与字体全部离线，图标使用提供的原图。Windows 安装包尚未做商业代码签名。"
+          gh release create "$RELEASE_TAG" downloads/* --title "水位线 $RELEASE_TAG" --notes "Windows：下载 Setup 安装版或 Portable 免安装版。Android：下载 Preview.apk 安装测试版；Unsigned.apk 仅供开发者自行签名，不能直接安装。游戏与字体全部离线，图标使用提供的原图。Windows 安装包尚未做商业代码签名。"

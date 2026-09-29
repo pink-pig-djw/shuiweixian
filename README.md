@@ -6,7 +6,7 @@
 
 在 [Releases](https://github.com/pink-pig-djw/shuiweixian/releases) 下载：
 
-- **Windows 安装版**：名称包含 `nsis` 的 `.exe`，安装时可创建桌面快捷方式。
+- **Windows 安装版**：`Windows-Setup.exe`，安装时可创建桌面快捷方式。
 - **Windows 免安装版**：`Windows-Portable.exe`，双击运行，无需浏览器或 Node.js。
 - **Android 预览版**：`Shuiweixian-Android-Preview.apk`，支持 Android 8.0 及以上。下载后允许用于下载的应用安装此 APK。
 - `Android-Unsigned.apk` 是供开发者自行签名的正式构建，**不能直接安装**。
